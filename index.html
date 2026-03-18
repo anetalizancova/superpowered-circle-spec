@@ -193,6 +193,18 @@
     }
     .comment-submit:hover { opacity: 0.8; }
 
+    /* welcome text blocks */
+    .text-block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 1.5rem; margin-bottom: 1.25rem; }
+    .text-block h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 400; margin: 0 0 0.75rem; color: var(--ink); }
+    .text-block p { font-size: 1rem; line-height: 1.7; margin-bottom: 0.6rem; }
+    .text-block p:last-child { margin-bottom: 0; }
+    .text-block ul { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+    .text-block ul li { font-size: 1rem; line-height: 1.7; color: var(--sub); padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
+    .text-block ul li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 6px; height: 6px; border-radius: 2px; background: var(--accent); }
+    .text-block ul li strong { color: var(--ink); }
+    .text-block--highlight { border-left: 3px solid var(--accent); }
+    .text-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.65rem; }
+
     /* download button */
     .dl-btn {
       display: inline-flex; align-items: center; gap: 0.35rem;
@@ -214,6 +226,7 @@
 <nav class="nav">
   <a class="nav-brand" href="#">Superpowered Circle</a>
   <ul class="nav-links">
+    <li><a href="#uvod">Úvod</a></li>
     <li><a href="#nazev">Název</a></li>
     <li><a href="#kanaly">Kanály</a></li>
     <li><a href="#smery">Vizuál</a></li>
@@ -228,6 +241,43 @@
     <p class="hero-tag">Přestavba komunity &middot; 2026</p>
     <h1>SUPERPOWERED</h1>
     <p class="hero-sub">Struktura, vizuální směr a&nbsp;brand pro nový Circle. Dokument se iteruje &mdash; komentuj přímo u&nbsp;každé sekce.</p>
+  </div>
+</div>
+
+<!-- ═══ ÚVOD KOMUNITY ═══ -->
+<div class="section" id="uvod">
+  <div class="wrap">
+    <div class="section-header">
+      <h2>Úvod komunity</h2>
+      <p class="section-desc">Texty pro uvítání členů a&nbsp;oznámení přestavby. Připravené k&nbsp;použití.</p>
+    </div>
+
+    <div class="text-block">
+      <p class="text-label">Uvítací text</p>
+      <h3>Vítejte v&nbsp;komunitě Superpowered</h3>
+      <p>Superschopnosti díky AI jsou, když dosahujete lepších výsledků rychleji a&nbsp;s&nbsp;menším úsilím. Když děláte to, co vás baví, a&nbsp;eliminujete nepodstatné. Když máte AI jako parťáka, ne jako hrozbu.</p>
+      <p>Proto tu můžete sdílet zkušenosti, inspirovat se a&nbsp;ptát se na cokoliv, co vás zajímá. V&nbsp;Komunitě (nebo Superpowered Feedu) diskutujete s&nbsp;experty z&nbsp;Aibility i&nbsp;Filipem Dřímalkou. V&nbsp;Events najdete kalendář všech akcí. V&nbsp;Hledám/Nabízím můžete něco nabídnout nebo hledat. A&nbsp;pokud máte předplatné AI&nbsp;EduStream, čekají na vás záznamy webinářů a&nbsp;vzdělávací obsah.</p>
+      <p><strong>Jedna komunita. Všechno na jednom místě.</strong></p>
+    </div>
+
+    <div class="text-block text-block--highlight">
+      <p class="text-label">Oznámení do komunity</p>
+      <h3>Měníme Circle. Spojujeme všechno do&nbsp;jednoho &mdash; Superpowered</h3>
+      <p>Pro všechny, kdo chtějí získat superschopnosti díky AI. Přicházejí od Aibility, z&nbsp;Budoucnosti nepráce, z&nbsp;FAILu, od Filipa Dřímalky &mdash; je to všechno jedna komunita, pod kterou spadáme.</p>
+      <p><strong>Co kde najdete?</strong></p>
+      <ul>
+        <li><strong>Komunita</strong> (nebo Superpowered Feed) &mdash; sdílení zkušeností s&nbsp;AI, tipy a&nbsp;triky z&nbsp;praxe, dotazy a&nbsp;diskuze. Experti z&nbsp;Aibility i&nbsp;Filip Dřímalka tu jsou s&nbsp;vámi. Můžete sdílet i&nbsp;své SP badges a&nbsp;výsledky assessmentu.</li>
+        <li><strong>Events</strong> &mdash; kalendář všech akcí: webináře, meetupy, masterclasses. Všechno, co děláme, na jednom místě.</li>
+        <li><strong>Hledám / Nabízím</strong> &mdash; prostor pro ty, kdo něco hledají nebo nabízejí. Spolupráce, projekty, příležitosti.</li>
+        <li><strong>AI EduStream</strong> &mdash; zamčená sekce pro předplatitele. Záznamy webinářů, vzdělávací obsah, kalendář. Pro všechny ostatní zůstává otevřená Komunita, Events a&nbsp;Hledám/Nabízím.</li>
+      </ul>
+      <p style="margin-top:0.75rem;"><strong>Prostě všechno na jednom místě.</strong></p>
+    </div>
+
+    <div class="section-footer">
+      <button class="comment-toggle" id="ctbtn-uvod" onclick="toggleCommentPanel('uvod')">&#x1F4AC; Komentář</button>
+    </div>
+    <div class="comment-panel" id="cp-uvod"></div>
   </div>
 </div>
 
@@ -593,7 +643,7 @@
 </footer>
 
 <script>
-const SECTIONS = ['nazev','kanaly','smery','prostory','moodboard','brand','video'];
+const SECTIONS = ['uvod','nazev','kanaly','smery','prostory','moodboard','brand','video'];
 
 function getComments(id) {
   try { return JSON.parse(localStorage.getItem('sp_comments_' + id) || '[]'); }

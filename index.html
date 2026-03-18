@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUPERPOWERED Circle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://hypothes.is/embed.js" async></script>
+  <style>
+    :root {
+      --ink: #000000;
+      --sub: #696969;
+      --muted: #94a3b8;
+      --paper: #ffffff;
+      --bg-soft: #F2F5FF;
+      --line: rgba(0,0,0,0.06);
+      --violet: #C0ADFF;
+      --violet-deep: #8B5CF6;
+      --blue: #1C58FF;
+      --pink: #FF5AFF;
+      --pink-light: #FFBAFF;
+      --blue-light: #84BAFF;
+      --orange: #FF9414;
+      --nav-h: 48px;
+      --font-display: 'Hedvig Letters Serif', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.55;
+      color: var(--ink); background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, .serif { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 1.15; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2rem); margin: 0 0 0.75rem; }
+    h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 700; margin: 0 0 0.35rem; }
+    p { margin-bottom: 0.75rem; color: var(--sub); }
+    small { font-size: 0.82rem; color: var(--muted); }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      background: rgba(255,255,255,0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line); z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(14px, 3vw, 40px);
+    }
+    .nav-brand { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 0.75rem; list-style: none; font-size: 0.68rem; font-weight: 600; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--ink); }
+    main { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px) 100px; }
+
+    .hero {
+      position: relative; margin-top: var(--nav-h);
+      padding: clamp(72px, 12vw, 140px) 0 clamp(56px, 8vw, 96px);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 55% 50% at 25% 45%, rgba(192,173,255,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 40% at 70% 35%, rgba(28,88,255,0.15) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 30% at 50% 65%, rgba(255,90,255,0.08) 0%, transparent 60%),
+        #F2F5FF;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-tag { font-family: var(--font-body); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--violet-deep); margin-bottom: 1.25rem; }
+    .hero-sub { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sub); margin-top: 0.75em; }
+    .hero-lead { font-size: 1rem; color: var(--sub); max-width: 50ch; margin-top: 1.5rem; line-height: 1.65; }
+    .sep { height: 1px; background: var(--line); margin: 3.5rem 0; }
+
+    .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 0.75rem; }
+    @media (max-width: 600px) { .name-row { grid-template-columns: 1fr; } }
+    .name-card { position: relative; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 20px; padding: 1.75rem 1.5rem 1.5rem; overflow: hidden; }
+    .name-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--violet), var(--blue)); }
+    .name-card .display-name { font-family: var(--font-display); font-size: 1.6rem; margin: 0 0 0.5rem; }
+    .name-card p { margin: 0; font-size: 0.88rem; }
+    .feed-options { margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .feed-pill { font-size: 0.78rem; font-weight: 600; padding: 0.4rem 0.85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
+    .feed-pill.rec { background: linear-gradient(135deg, rgba(192,173,255,0.2), rgba(28,88,255,0.1)); border-color: var(--violet); color: #5B21B6; }
+
+    .sidebar-mock { background: #0f172a; border-radius: 20px; padding: 1.25rem 0; margin: 1.5rem 0; max-width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    .sidebar-header { padding: 0 1.25rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.5rem; }
+    .sidebar-header h3 { font-family: var(--font-display); font-size: 1rem; color: #f8fafc; margin: 0; font-weight: 400; }
+    .sidebar-header small { font-size: 0.7rem; color: #64748b; }
+    .sidebar-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.55rem 1.25rem; font-size: 0.8rem; color: #cbd5e1; cursor: default; }
+    .sidebar-item:hover { background: rgba(255,255,255,0.03); }
+    .sidebar-item.active { background: rgba(192,173,255,0.1); color: #f8fafc; }
+    .sidebar-item .icon { width: 18px; text-align: center; font-size: 0.85rem; flex-shrink: 0; }
+    .sidebar-group { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #475569; padding: 0.85rem 1.25rem 0.25rem; }
+    .sidebar-badge { margin-left: auto; font-size: 0.55rem; font-weight: 700; background: rgba(192,173,255,0.15); color: #C0ADFF; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .sidebar-out { padding: 0.85rem 1.25rem 0.5rem; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 0.5rem; }
+    .sidebar-out small { font-size: 0.68rem; color: #475569; line-height: 1.5; }
+
+    .dir-intro { font-size: 0.95rem; color: var(--sub); max-width: 60ch; margin-bottom: 2.5rem; }
+    .dir-block { margin-bottom: 3.5rem; }
+    .dir-block h3 { font-size: 1rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; }
+    .tag { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 5px; background: rgba(192,173,255,0.2); color: #5B21B6; }
+    .tag--blue { background: rgba(28,88,255,0.12); color: #1C58FF; }
+    .tag--pink { background: rgba(255,90,255,0.12); color: #c026d3; }
+    .dir-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.15rem; max-width: 62ch; }
+    .moodboard { position: relative; width: 100%; height: min(340px, 45vw); min-height: 220px; border-radius: 24px; overflow: hidden; }
+    .mb-aibility {
+      background:
+        linear-gradient(135deg, rgba(192,173,255,0.55) 0%, rgba(28,88,255,0.15) 40%, transparent 65%),
+        linear-gradient(340deg, rgba(255,90,255,0.1) 0%, transparent 40%),
+        linear-gradient(180deg, #F2F5FF 0%, #ede8ff 100%);
+    }
+    .mb-aibility::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(192,173,255,0.3) 50%, rgba(28,88,255,0.12) 65%, transparent 80%);
+      mix-blend-mode: soft-light;
+    }
+    .mb-deep {
+      background:
+        linear-gradient(170deg, #060b18 0%, #0d1540 30%, #18124a 50%, #0a1a3a 70%, #060b18 100%),
+        linear-gradient(80deg, transparent 20%, rgba(28,88,255,0.12) 45%, rgba(139,92,246,0.15) 60%, transparent 80%);
+    }
+    .mb-deep::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+      background: linear-gradient(90deg, rgba(28,88,255,0.08) 0%, rgba(139,92,246,0.15) 40%, rgba(192,173,255,0.08) 100%);
+      filter: blur(40px);
+    }
+    .mb-deep::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(0deg, transparent 40%, rgba(6,11,24,0.6) 100%);
+    }
+    .mb-bridge {
+      background:
+        linear-gradient(155deg, #F2F5FF 0%, #ece7ff 30%, #e0d6ff 55%, #d5e3ff 75%, #F2F5FF 100%);
+    }
+    .mb-bridge::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 10%, rgba(255,90,255,0.06) 40%, rgba(132,186,255,0.1) 60%, transparent 90%);
+    }
+    .mood-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 1.15rem; }
+    .swatches { display: flex; gap: 8px; }
+    .swatch { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .mood-where { font-size: 0.8rem; color: var(--muted); flex: 1; min-width: 180px; }
+    .ref-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+    @media (max-width: 700px) { .ref-gallery { grid-template-columns: 1fr; } }
+    .ref-gallery img { width: 100%; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .ref-caption { font-size: 0.72rem; color: var(--muted); margin-top: 0.35rem; }
+
+    .font-ref { margin-top: 1.25rem; padding: 1rem 1.25rem; background: var(--bg-soft); border-radius: 14px; display: flex; flex-wrap: wrap; gap: 2rem; align-items: baseline; }
+    .font-ref-item .label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .font-ref-item .sample-serif { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink); }
+    .font-ref-item .sample-sans { font-family: var(--font-body); font-size: 1.1rem; font-weight: 500; color: var(--ink); }
+
+    .space-grid { display: grid; gap: 1.5rem; margin: 1.5rem 0 2.5rem; }
+    .space-card { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+    .space-head { padding: 1rem 1.25rem 0.25rem; }
+    .space-head h3 { font-size: 1rem; margin: 0 0 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+    .space-head p { font-size: 0.8rem; color: var(--muted); margin: 0 0 0.75rem; }
+    .edu-ref { width: 100%; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 10px 40px rgba(0,0,0,0.06); }
+    .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    @media (max-width: 600px) { .events-grid { grid-template-columns: 1fr; } }
+
+    .video-box { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 16px; padding: 1.15rem 1.25rem; margin: 1rem 0; }
+    .review-bar {
+      background: linear-gradient(135deg, #ede8ff, #dce8ff);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 14px; padding: 1rem 1.25rem;
+      margin-bottom: 2.5rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem;
+    }
+    .review-bar p { margin: 0; font-size: 0.82rem; color: var(--ink); flex: 1; min-width: 200px; }
+    .review-bar .btn {
+      font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
+      padding: 0.5rem 1rem; border-radius: 10px; border: none; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn--primary { background: var(--ink); color: #fff; }
+    .btn--secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line) !important; }
+    footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.72rem; color: var(--muted); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-brand" href="#">Superpowered Circle</a>
+    <ul class="nav-links">
+      <li><a href="#nazev">Název</a></li>
+      <li><a href="#kanaly">Kanály</a></li>
+      <li><a href="#smery">Vizuál</a></li>
+      <li><a href="#prostory">Prostory</a></li>
+      <li><a href="#covery">Moodboard</a></li>
+      <li><a href="#video">Video</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero" id="uvod">
+    <div class="hero-bg"></div>
+    <div class="hero-content" style="max-width:1100px;margin:0 auto;padding:0 clamp(16px,3vw,40px);">
+      <p class="hero-tag">Přestavba komunity</p>
+      <h1>SUPERPOWERED<span class="hero-sub">Circle &middot; struktura &amp; vizuál</span></h1>
+      <p class="hero-lead">Jedna komunita pod metodikou Superpowered Professional. Dokument se iteruje.</p>
+    </div>
+  </div>
+
+  <main>
+
+    <div class="review-bar">
+      <p><strong>Review mode</strong> &mdash; označ text a&nbsp;přidej komentář přes panel vpravo (Hypothesis). Nebo stáhni brand guide.</p>
+      <a class="btn btn--secondary" href="brand-guide.md" download>&#x2B07; Brand Guide .md</a>
+    </div>
+
+    <section id="nazev">
+      <h2>Název</h2>
+      <div class="name-row">
+        <div class="name-card">
+          <p class="display-name">SUPERPOWERED</p>
+          <p>Krátké, silné. Jméno komunity = jméno mindset.</p>
+        </div>
+        <div class="name-card">
+          <p class="display-name">SUPERPOWERED Professional</p>
+          <p>Plná vazba na SP™ assessment a&nbsp;metodiku.</p>
+        </div>
+      </div>
+      <h3 style="margin-top:1.75rem;">Název hlavního feedu</h3>
+      <p style="font-size:0.88rem;">Alternativy k&nbsp;&bdquo;Hlavní feed&ldquo;:</p>
+      <div class="feed-options">
+        <span class="feed-pill rec">Komunita</span>
+        <span class="feed-pill">Sdílení &amp; Inspirace</span>
+        <span class="feed-pill rec">Superpowered Feed</span>
+        <span class="feed-pill">Experimenty &amp; Inspirace</span>
+        <span class="feed-pill">Diskuze</span>
+        <span class="feed-pill">SP Hub</span>
+      </div>
+      <p style="font-size:0.82rem;color:#94a3b8;">Označené = doporučené varianty</p>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="kanaly">
+      <h2>Kanály</h2>
+      <div class="sidebar-mock">
+        <div class="sidebar-header">
+          <h3>SUPERPOWERED</h3>
+          <small>Circle komunita</small>
+        </div>
+        <div class="sidebar-group">Komunita</div>
+        <div class="sidebar-item active">
+          <span class="icon">&#x1F4AC;</span> Komunita
+          <span class="sidebar-badge">Vše v&nbsp;jednom</span>
+        </div>
+        <div class="sidebar-item"><span class="icon">&#x1F4C5;</span> Events</div>
+        <div class="sidebar-item"><span class="icon">&#x1F91D;</span> Hledám / Nabízím</div>
+        <div class="sidebar-group">Vzdělávání</div>
+        <div class="sidebar-item"><span class="icon">&#x1F393;</span> AI Edu Stream</div>
+        <div class="sidebar-group">Tým</div>
+        <div class="sidebar-item" style="color:#64748b;"><span class="icon">&#x1F512;</span> Aibility Inner Circle</div>
+        <div class="sidebar-out">
+          <small><strong>Out:</strong> chat, kurzové diskuze, staré materiály, FAIL sekce</small>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="smery">
+      <h2>Vizuální směry</h2>
+      <p class="dir-intro">Tři směry pro všechny vizuály v&nbsp;Circle. Nejsou to tři šablony, ale <strong>kombinovatelné vrstvy</strong>. Každý prostor dostane směr, který k&nbsp;němu sedí. U&nbsp;všeho existuje světlá i&nbsp;tmavá varianta. Základ vychází z&nbsp;Aibility brand palety.</p>
+
+      <div class="font-ref">
+        <div class="font-ref-item">
+          <p class="label">Headlines</p>
+          <p class="sample-serif">Hedvig Letters Serif</p>
+        </div>
+        <div class="font-ref-item">
+          <p class="label">Body / UI</p>
+          <p class="sample-sans">Geist</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;">
+        <div class="dir-block">
+          <h3>Aibility Core <span class="tag">Violet dominanta</span></h3>
+          <p class="dir-desc">Primární směr. Jemný gradient flow violet &rarr; blue na&nbsp;světlém podkladu. Žádné tvrdé tvary &mdash; jen plynulý přechod barev. Každý prostor v&nbsp;Circle si může vzít trochu jiný poměr violet/blue/pink, ale základ zůstává světlý a&nbsp;vzdušný.</p>
+          <div class="moodboard mb-aibility"></div>
+          <div class="mood-meta">
+            <div class="swatches">
+              <span class="swatch" style="background:#F2F5FF"></span>
+              <span class="swatch" style="background:#C0ADFF"></span>
+              <span class="swatch" style="background:#8B5CF6"></span>
+              <span class="swatch" style="background:#1C58FF"></span>
+              <span class="swatch" style="background:#FF5AFF;opacity:0.5"></span>
+              <span class="swatch" style="background:#000"></span>
+            </div>
+            <p class="mood-where">Komunita, Hledám/Nabízím, obecné covery</p>
+          </div>
+        </div>
+
+        <div class="dir-block">
+          <h3>Deep <span class="tag--blue tag">Blue dominanta</span></h3>
+          <p class="dir-desc">Tmavá varianta se stejnými barvami. Ambientní gradient blue &rarr; violet na&nbsp;tmavém pozadí. Pro Edu Stream dark, SP profily, noční covery. Vždy kombinovatelné se světlou variantou.</p>
+          <div class="moodboard mb-deep"></div>
+          <div class="mood-meta">
+            <div class="swatches">
+              <span class="swatch" style="background:#060b18"></span>
+              <span class="swatch" style="background:#1e293b"></span>
+              <span class="swatch" style="background:#1C58FF"></span>
+              <span class="swatch" style="background:#8B5CF6"></span>
+              <span class="swatch" style="background:#f8fafc"></span>
+            </div>
+            <p class="mood-where">Tmavé covery, SP profily, Edu Stream dark</p>
+          </div>
+        </div>
+
+        <div class="dir-block">
+          <h3>Bridge <span class="tag--pink tag">Levandule + pink</span></h3>
+          <p class="dir-desc">Jemný směr pro prostory, kde grafika nemá křičet. Minimum kontrastu, levandule přechází do&nbsp;blankytné. Textové hlavičky, žádné fotky.</p>
+          <div class="moodboard mb-bridge"></div>
+          <div class="mood-meta">
+            <div class="swatches">
+              <span class="swatch" style="background:#F2F5FF"></span>
+              <span class="swatch" style="background:#e0d6ff"></span>
+              <span class="swatch" style="background:#C0ADFF"></span>
+              <span class="swatch" style="background:#84BAFF"></span>
+              <span class="swatch" style="background:#000"></span>
+            </div>
+            <p class="mood-where">Unifikace prostorů, jemné pozadí</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="prostory">
+      <h2>Prostory</h2>
+      <p style="max-width:58ch;">Jak budou vypadat jednotlivé prostory v&nbsp;Circle. Každý si bere jinou dominantní barvu z&nbsp;Aibility palety.</p>
+
+      <div class="space-grid">
+
+        <!-- AI Edu Stream -->
+        <div class="space-card">
+          <div class="space-head">
+            <h3>AI Edu Stream <span class="tag--blue tag">Blue dominanta</span></h3>
+            <p>Vzdělávací obsah. Hedvig Letters Serif nadpisy, blue &rarr; violet gradient. Aktuální styl:</p>
+          </div>
+          <div style="padding:1.25rem;">
+            <img class="edu-ref" src="assets/edu-stream-reference.png" alt="AI Edu Stream - aktuální styl" />
+            <p style="font-size:0.78rem;color:var(--muted);margin:0.75rem 0 0;">Aktuální cover &mdash; světlý gradient, Hedvig Serif titulek, Aibility branding</p>
+          </div>
+          <div style="padding:0 1.25rem 1.25rem;">
+            <p style="font-size:0.82rem;font-weight:600;margin:0 0 0.5rem;color:var(--ink);">Příklady použití</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+              <span style="font-size:0.72rem;padding:0.35rem 0.75rem;border-radius:10px;background:linear-gradient(135deg,#dce8ff,#c8d8ff);color:#1C58FF;font-weight:500;">Cover streamu</span>
+              <span style="font-size:0.72rem;padding:0.35rem 0.75rem;border-radius:10px;background:linear-gradient(135deg,#dce8ff,#c8d8ff);color:#1C58FF;font-weight:500;">Thumbnail epizody</span>
+              <span style="font-size:0.72rem;padding:0.35rem 0.75rem;border-radius:10px;background:linear-gradient(135deg,#dce8ff,#c8d8ff);color:#1C58FF;font-weight:500;">Promo post</span>
+              <span style="font-size:0.72rem;padding:0.35rem 0.75rem;border-radius:10px;background:linear-gradient(135deg,#dce8ff,#c8d8ff);color:#1C58FF;font-weight:500;">Banner v&nbsp;Circle</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="space-card">
+          <div class="space-head">
+            <h3>Events <span class="tag--pink tag">Barva se střídá</span></h3>
+            <p>Každá akce má vlastní cover s&nbsp;fotkou + overlay. Dominantní barva se mění podle akce &mdash; někdy blue, někdy violet, někdy pink.</p>
+          </div>
+          <div class="events-grid" style="padding:0 1.25rem 1.25rem;">
+            <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;">
+              <img src="assets/event-ref-cursor-mc.png" alt="Cursor MC" style="width:100%;height:100%;object-fit:cover;" />
+              <div style="position:absolute;bottom:8px;left:10px;font-size:0.62rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.5);">Dark + code overlay</div>
+            </div>
+            <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;">
+              <img src="assets/event-ref-workshop.png" alt="Workshop" style="width:100%;height:100%;object-fit:cover;" />
+              <div style="position:absolute;bottom:8px;left:10px;font-size:0.62rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.5);">Light + foto</div>
+            </div>
+            <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;">
+              <img src="assets/event-ref-ai-agent.png" alt="AI Agent" style="width:100%;height:100%;object-fit:cover;" />
+              <div style="position:absolute;bottom:8px;left:10px;font-size:0.62rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.5);">Blue/violet gradient</div>
+            </div>
+          </div>
+          <div style="padding:0 1.25rem 1.25rem;">
+            <p style="font-size:0.78rem;color:var(--muted);margin:0;">Barva rotuje &mdash; cover vždy ladí s&nbsp;tématem akce. Fotky z&nbsp;live akcí jako základ, po sezóně refresh.</p>
+          </div>
+        </div>
+
+        <!-- Komunita + Hledám/Nabízím -->
+        <div class="space-card">
+          <div class="space-head">
+            <h3>Komunita &amp; Hledám/Nabízím <span class="tag">Violet dominanta</span></h3>
+            <p>Dva prostory, stejný vizuální směr (Aibility Core). Čistý gradient, bez fotky, Hedvig Serif titulek. Liší se jen obsahem.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;padding:0 1.25rem 1.25rem;">
+            <div style="border-radius:16px;overflow:hidden;padding:2rem 1.5rem;background:linear-gradient(135deg,#F2F5FF 0%,#e0d8ff 40%,#c8b8ff 70%,#b8a8f8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;gap:0.35rem;">
+              <span style="font-family:var(--font-display);font-size:clamp(1.3rem,3vw,1.8rem);background:linear-gradient(135deg,#7c3aed,#4f46e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Komunita</span>
+              <span style="font-size:0.65rem;font-weight:600;color:#8B5CF6;letter-spacing:0.04em;">SUPERPOWERED</span>
+            </div>
+            <div style="border-radius:16px;overflow:hidden;padding:2rem 1.5rem;background:linear-gradient(160deg,#dce8ff 0%,#c8d8ff 35%,#b8c8ff 60%,#a8b8f0 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;gap:0.35rem;">
+              <span style="font-family:var(--font-display);font-size:clamp(1.1rem,2.5vw,1.5rem);color:#1C58FF;">Hledám / Nabízím</span>
+              <span style="font-size:0.65rem;font-weight:600;color:#3b82f6;letter-spacing:0.04em;">Marketplace</span>
+            </div>
+          </div>
+          <div style="padding:0 1.25rem 1rem;">
+            <p style="font-size:0.78rem;color:var(--muted);margin:0;">Komunita = violet shift, Hledám/Nabízím = blue shift. Stejný základ, jiný poměr barev.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="covery">
+      <h2>Vizuální moodboard</h2>
+      <p style="max-width:58ch;">Ukázky existujících materiálů &mdash; event covery, promo grafiky, fotky s&nbsp;overlay. Tenhle styl chceme přenést i&nbsp;do Circle prostorů. Každá sekce si může vzít jinou dominantní barvu z&nbsp;palety.</p>
+
+      <div class="ref-gallery">
+        <div>
+          <img src="assets/event-ref-cursor-mc.png" alt="Cursor Masterclass cover" />
+          <p class="ref-caption">Cursor Masterclass &mdash; dark, foto + code overlay, serif titulek</p>
+        </div>
+        <div>
+          <img src="assets/event-ref-workshop.png" alt="Workshop foto" />
+          <p class="ref-caption">Workshop foto &mdash; code overlay, live vibe, light tónování</p>
+        </div>
+        <div>
+          <img src="assets/event-ref-ai-agent.png" alt="AI Agent webinar cover" />
+          <p class="ref-caption">AI Agent webinář &mdash; blue/violet gradient, Hedvig Serif, bílé pills</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;">Dominantní barva podle sekce</h3>
+      <p style="font-size:0.88rem;color:var(--sub);max-width:58ch;">Každý prostor si bere jinou dominantu z&nbsp;palety, ale přechod je vždy jemný &mdash; gradient flow, ne ostrá barva. Všechno je kombinovatelné.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:1.25rem 0;">
+        <div style="flex:1;min-width:160px;padding:1rem 1.25rem;border-radius:16px;background:linear-gradient(135deg,#ede8ff,#d4c8ff);border:1px solid var(--line);">
+          <strong style="font-size:0.8rem;">Komunita</strong>
+          <p style="font-size:0.75rem;margin:0.25rem 0 0;color:#5B21B6;">Violet dominanta</p>
+        </div>
+        <div style="flex:1;min-width:160px;padding:1rem 1.25rem;border-radius:16px;background:linear-gradient(135deg,#dce8ff,#b8d4ff);border:1px solid var(--line);">
+          <strong style="font-size:0.8rem;">AI Edu Stream</strong>
+          <p style="font-size:0.75rem;margin:0.25rem 0 0;color:#1C58FF;">Blue dominanta</p>
+        </div>
+        <div style="flex:1;min-width:160px;padding:1rem 1.25rem;border-radius:16px;background:linear-gradient(135deg,#f0e8ff,#ffeaff);border:1px solid var(--line);">
+          <strong style="font-size:0.8rem;">Events</strong>
+          <p style="font-size:0.75rem;margin:0.25rem 0 0;color:#c026d3;">Pink + foto overlay</p>
+        </div>
+        <div style="flex:1;min-width:160px;padding:1rem 1.25rem;border-radius:16px;background:linear-gradient(135deg,#060b18,#1a1050);border:1px solid rgba(255,255,255,0.06);">
+          <strong style="font-size:0.8rem;color:#f8fafc;">SP / Inner Circle</strong>
+          <p style="font-size:0.75rem;margin:0.25rem 0 0;color:#C0ADFF;">Deep dark varianta</p>
+        </div>
+      </div>
+
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:1.5rem;">Covery komunity vytvoříme zvlášť, až bude zamčený název a&nbsp;celkový vizuální směr.</p>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="video">
+      <h2>Úvodní video</h2>
+      <p>Krátké video do komunity na úvod přestavby. Co se mění, kam co patří, proč jeden feed.</p>
+      <div class="video-box">
+        <strong>To-do:</strong> Anet &mdash; produkce po locknutí názvu a&nbsp;vizuálu.
+      </div>
+    </section>
+
+    <footer>Circle SUPERPOWERED 2026</footer>
+  </main>
+</body>
+</html>

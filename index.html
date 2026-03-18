@@ -23,7 +23,7 @@
       --nav-h: 52px;
       --font-display: 'Hedvig Letters Serif', Georgia, serif;
       --font-body: 'Inter', system-ui, sans-serif;
-      --max-w: 780px;
+      --max-w: 840px;
       --radius: 12px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,7 +35,7 @@
       -webkit-font-smoothing: antialiased;
     }
     h1, h2, h3.serif { font-family: var(--font-display); font-weight: 400; }
-    h2 { font-family: var(--font-display); font-size: 1.75rem; font-weight: 400; color: var(--ink); margin: 0 0 0.6rem; }
+    h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--ink); margin: 0 0 0.65rem; }
     p { color: var(--sub); margin-bottom: 0.65rem; }
 
     /* nav */
@@ -59,25 +59,25 @@
     /* hero */
     .hero { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--line); background: var(--paper); }
     .hero-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
-    .hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 0.75rem; }
-    .hero-sub { font-size: 1.1rem; color: var(--sub); max-width: 48ch; line-height: 1.65; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4rem); font-weight: 400; line-height: 1.08; margin-bottom: 0.85rem; }
+    .hero-sub { font-size: 1.15rem; color: var(--sub); max-width: 48ch; line-height: 1.65; }
 
     /* sections */
     .section { padding: clamp(36px, 5vw, 56px) 0; border-bottom: 1px solid var(--line); background: var(--paper); }
     .section:nth-child(even) { background: var(--bg); }
     .section-header { margin-bottom: 1.5rem; }
-    .section-desc { font-size: 1rem; color: var(--sub); max-width: 58ch; }
+    .section-desc { font-size: 1.05rem; color: var(--sub); max-width: 58ch; line-height: 1.6; }
 
     /* cards */
     .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
     @media (max-width: 560px) { .card-row { grid-template-columns: 1fr; } }
-    .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem 1.15rem; }
-    .card-name { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.35rem; color: var(--ink); }
-    .card p { font-size: 0.9rem; margin: 0; color: var(--sub); }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 1.35rem; }
+    .card-name { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 0.4rem; color: var(--ink); }
+    .card p { font-size: 1rem; margin: 0; color: var(--sub); line-height: 1.55; }
 
     /* pills */
     .pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
-    .pill { font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--sub); }
+    .pill { font-size: 0.9rem; font-weight: 600; padding: 0.4rem 0.95rem; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--sub); }
     .pill--rec { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
 
     /* sidebar mock */
@@ -86,7 +86,7 @@
     .sb-head h3 { font-family: var(--font-display); font-size: 0.95rem; color: #f1f5f9; margin: 0; font-weight: 400; }
     .sb-head small { font-size: 0.65rem; color: #64748b; }
     .sb-group { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #475569; padding: 0.65rem 1rem 0.15rem; }
-    .sb-item { display: flex; align-items: center; gap: 0.55rem; padding: 0.45rem 1rem; font-size: 0.85rem; color: #94a3b8; }
+    .sb-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 1.1rem; font-size: 0.9rem; color: #94a3b8; }
     .sb-item.active { background: rgba(79,70,229,0.08); color: #e0e7ff; }
     .sb-icon { width: 16px; text-align: center; font-size: 0.8rem; flex-shrink: 0; }
     .sb-badge { margin-left: auto; font-size: 0.5rem; font-weight: 700; background: rgba(79,70,229,0.15); color: #a5b4fc; padding: 0.1rem 0.35rem; border-radius: 4px; }
@@ -125,9 +125,9 @@
     /* spaces */
     .space-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
     .space-head { padding: 1rem 1.15rem 0.15rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    .space-head h3 { font-size: 1rem; font-weight: 700; margin: 0; }
+    .space-head h3 { font-size: 1.1rem; font-weight: 700; margin: 0; }
     .space-body { padding: 0.5rem 1.15rem 1.15rem; }
-    .space-body p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.65rem; }
+    .space-body p { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.65rem; }
     .space-preview { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
     .space-preview img { width: 100%; display: block; }
     .events-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
@@ -319,8 +319,8 @@
 
     <!-- Core -->
     <div style="margin-bottom:2.5rem;">
-      <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;display:flex;align-items:center;gap:0.5rem;">Aibility Core <span class="dir-tag dir-tag--core">Světlá</span></h3>
-      <p style="font-size:0.92rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Jemný gradient flow na&nbsp;světlém podkladu. Barvy se mísí plynule, žádné tvrdé tvary. Základ pro většinu prostorů.</p>
+      <h3 style="font-size:1.1rem;font-weight:700;margin:0 0 0.35rem;display:flex;align-items:center;gap:0.5rem;">Aibility Core <span class="dir-tag dir-tag--core">Světlá</span></h3>
+      <p style="font-size:1rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Jemný gradient flow na&nbsp;světlém podkladu. Barvy se mísí plynule, žádné tvrdé tvary. Základ pro většinu prostorů.</p>
       <div class="mb mb-core"></div>
       <div class="mb-meta">
         <div class="swatches">
@@ -336,8 +336,8 @@
 
     <!-- Deep -->
     <div style="margin-bottom:2.5rem;">
-      <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;display:flex;align-items:center;gap:0.5rem;">Deep <span class="dir-tag dir-tag--deep">Tmavá</span></h3>
-      <p style="font-size:0.92rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Stejné barvy, tmavá báze. Ambientní glow zespoda. Pro SP profily, Edu Stream dark, noční covery.</p>
+      <h3 style="font-size:1.1rem;font-weight:700;margin:0 0 0.35rem;display:flex;align-items:center;gap:0.5rem;">Deep <span class="dir-tag dir-tag--deep">Tmavá</span></h3>
+      <p style="font-size:1rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Stejné barvy, tmavá báze. Ambientní glow zespoda. Pro SP profily, Edu Stream dark, noční covery.</p>
       <div class="mb mb-deep"></div>
       <div class="mb-meta">
         <div class="swatches">
@@ -353,8 +353,8 @@
 
     <!-- Bridge -->
     <div style="margin-bottom:0.5rem;">
-      <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;display:flex;align-items:center;gap:0.5rem;">Bridge <span class="dir-tag dir-tag--bridge">Subtilní</span></h3>
-      <p style="font-size:0.92rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Minimum kontrastu. Pro prostory kde grafika nemá křičet &mdash; jemné pozadí, textové hlavičky.</p>
+      <h3 style="font-size:1.1rem;font-weight:700;margin:0 0 0.35rem;display:flex;align-items:center;gap:0.5rem;">Bridge <span class="dir-tag dir-tag--bridge">Subtilní</span></h3>
+      <p style="font-size:1rem;color:var(--muted);max-width:58ch;margin-bottom:0.85rem;">Minimum kontrastu. Pro prostory kde grafika nemá křičet &mdash; jemné pozadí, textové hlavičky.</p>
       <div class="mb mb-bridge"></div>
       <div class="mb-meta">
         <div class="swatches">
@@ -559,7 +559,7 @@
     </table>
 
     <h3 style="font-size:0.95rem;margin:1.5rem 0 0.35rem;">Pravidla</h3>
-    <ol style="font-size:0.92rem;color:var(--sub);padding-left:1.25rem;line-height:1.85;">
+    <ol style="font-size:1rem;color:var(--sub);padding-left:1.25rem;line-height:1.85;">
       <li>Gradient flow, ne blob kolečka &mdash; přechody jsou vždy plynulé</li>
       <li>Každá sekce Circle jiná dominanta &mdash; ale z&nbsp;jedné palety</li>
       <li>Světlá + tmavá varianta musí fungovat vedle sebe</li>

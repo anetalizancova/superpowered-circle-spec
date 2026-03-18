@@ -232,6 +232,7 @@
     <li><a href="#smery">Vizuál</a></li>
     <li><a href="#prostory">Prostory</a></li>
     <li><a href="#moodboard">Moodboard</a></li>
+    <li><a href="#covery">Covery</a></li>
     <li><a href="#brand">Brand</a></li>
   </ul>
 </nav>
@@ -557,12 +558,48 @@
       </div>
     </div>
 
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:1.25rem;">Covery komunity vytvoříme zvlášť, až bude zamčený název a&nbsp;vizuální směr.</p>
-
     <div class="section-footer">
       <button class="comment-toggle" id="ctbtn-moodboard" onclick="toggleCommentPanel('moodboard')">&#x1F4AC; Komentář</button>
     </div>
     <div class="comment-panel" id="cp-moodboard"></div>
+  </div>
+</div>
+
+<!-- ═══ COVER DRAFTY ═══ -->
+<div class="section" id="covery">
+  <div class="wrap">
+    <div class="section-header">
+      <h2>Covery komunity</h2>
+      <p class="section-desc">Prvotní návrhy hlavního coveru. Work in progress &mdash; koncept propojení Aibility &amp;&nbsp;Budoucnost nepráce. Pokud je směr ok, rozpracujeme; jinak jdeme jinou cestou.</p>
+    </div>
+
+    <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.75rem;border-radius:8px;background:#fef3c7;color:#92400e;font-size:0.72rem;font-weight:600;margin-bottom:1.25rem;">&#x26A0;&#xFE0F; Work in progress &mdash; drafty ke komentáři</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div>
+        <img src="assets/cover-draft-wave.png" alt="Cover draft — wave" style="width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,0.06);" />
+        <p style="font-size:0.78rem;color:var(--muted);margin:0.4rem 0 0;">Wave &mdash; violet/blue flow, serif titulek, jemný glow</p>
+      </div>
+      <div>
+        <img src="assets/cover-draft-horizon.png" alt="Cover draft — horizon" style="width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,0.06);" />
+        <p style="font-size:0.78rem;color:var(--muted);margin:0.4rem 0 0;">Horizon &mdash; blue/orange gradient, cinematic feel</p>
+      </div>
+      <div>
+        <img src="assets/cover-draft-brands.png" alt="Cover draft — oba brandy" style="width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,0.06);" />
+        <p style="font-size:0.78rem;color:var(--muted);margin:0.4rem 0 0;">Oba brandy &mdash; Aibility + Budoucnost nepráce vedle sebe</p>
+      </div>
+      <div>
+        <img src="assets/cover-draft-glow.png" alt="Cover draft — glow" style="width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,0.06);" />
+        <p style="font-size:0.78rem;color:var(--muted);margin:0.4rem 0 0;">Glow &mdash; violet-to-orange ambient, full bleed text</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.9rem;color:var(--sub);">Vize: propojení obou brandů (Aibility + Budoucnost nepráce) v&nbsp;jednom coveru. Loga se dolepí v&nbsp;Canvě/Figmě na finální verzi. Pozadí jako základ, text a&nbsp;loga vrstva navrch.</p>
+
+    <div class="section-footer">
+      <button class="comment-toggle" id="ctbtn-covery" onclick="toggleCommentPanel('covery')">&#x1F4AC; Komentář</button>
+    </div>
+    <div class="comment-panel" id="cp-covery"></div>
   </div>
 </div>
 
@@ -643,7 +680,7 @@
 </footer>
 
 <script>
-const SECTIONS = ['uvod','nazev','kanaly','smery','prostory','moodboard','brand','video'];
+const SECTIONS = ['uvod','nazev','kanaly','smery','prostory','moodboard','covery','brand','video'];
 
 function getComments(id) {
   try { return JSON.parse(localStorage.getItem('sp_comments_' + id) || '[]'); }
